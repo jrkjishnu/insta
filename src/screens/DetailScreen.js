@@ -1,15 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DetailScreen = ({navigation}) => {
+  const [data,setData] = useState()
+  useEffect(()=>{
+    handleSubmit();
+  },[])
+  const handleSubmit = async()=>{
+    try {
+      const value = await AsyncStorage.getItem('user')
+      console.log("val",value);
+      if(value !== null) {
+        setData(value)
+      }
+    } catch(e) {
+      // error reading value
+    }
+  }
   return (
     <View style={styles.screenContainer}>
-      <Text style={styles.title}>Detail Screen</Text>
-      <Pressable
-        style={styles.buttonStyle}
-        onPress={() => navigation.navigate('Home')}>
-        <Text style={styles.buttonTextStyle}>Go To Home Screen</Text>
-      </Pressable>
+      <Text style={{fontSize:50}}>{data}</Text>
     </View>
   );
 };
