@@ -1,35 +1,77 @@
-import React from 'react';
-import {View, Text, StyleSheet, Pressable, TextInput,Button} from 'react-native';
+import React, { useState } from 'react';
+import {View, Text, StyleSheet, Pressable, TextInput,Button, ScrollView} from 'react-native';
 import RootNavigator from '../navigation/RootNavigator';
 import HomeScreen from './HomeScreen';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { emailValidator } from '../../validator';
 const SigninScreen = ({navigation})=>{
-    const handleSubmit = ()=>{
-        console.warn("log");
-        return <HomeScreen />
+    const [userData,setUserData] = useState()
+    const [password,setPassword] = useState()
+    const [confirmpassword,setconfirmPassword] = useState()
+
+    const [age,setAge] = useState()
+    const [email,setEmail] = useState()
+
+    const [nameError,setUserError] = useState(false)
+    const [passwordError,setPasswordError] = useState(false)
+    const [ageError,setageError] = useState(false)
+    const [emailReq,setEmailReq] = useState(false)
+    const [emailValid,setEmailValid] = useState(false)
+    const [confirmpasswordError,setconfirmPasswordError] = useState(false)
+
+    const handleSubmit = async()=>{
+      !userData?setUserError(true):setUserError(false)
+      !password?setPasswordError(true):setPasswordError(false)
+
+      !confirmpassword?setconfirmPasswordError(true):setconfirmPasswordError(false)
+      !age?setageError(true):setageError(false)
+      let validate = emailValidator(email)
+      validate.required?setEmailReq(false): setEmailReq(true)
+      validate.valid?setEmailValid(false): setEmailValid(true)
+      if(userData&&password&&age){
+        setUserError(false)
+        setPasswordError(false)
+        try {
+            await AsyncStorage.setItem('user', userData)
+          } catch (e) {
+            // saving error
+          }
+          setUserData('')
+          setPassword('')
+        navigation.navigate('home')
+      }
     }
     return(
         <View style={styles.screenContainer}>
             <View style={styles.welcome}>
-            <Text style={{marginTop:140,color:'white',fontSize:50}}>Welcome</Text>
+            <Text style={{color:'white',fontSize:50,marginTop:130}}>Welcome</Text>
             </View>
             <View style={styles.form}>
-            <Text style={{textAlign:'center',fontSize:40}}>Signin</Text>
-            <View style={styles.formContainer}>
+            <Text style={{textAlign:'center',fontSize:40}}>SignIn</Text>
+            <ScrollView style={styles.formContainer}>
                 <Text style={styles.text}>UserName</Text>
-                <TextInput style={styles.textInput} placeholder="Enter the username"></TextInput>
+                <TextInput style={styles.textInput} value={userData} placeholder="Enter the username"  onChangeText={(e)=>setUserData(e)}></TextInput>
+                {nameError && <Text style={styles.error}>Username is Required</Text>}
+                <Text style={styles.text}>Age</Text>
+                <TextInput style={styles.textInput}  placeholder="Enter the Age"  value={age} onChangeText={(e)=>setAge(e)}></TextInput>
+                {ageError && <Text style={styles.error}>Age is Required</Text>}
+                <Text style={styles.text}>Email</Text>
+                <TextInput style={styles.textInput}  placeholder="Enter the Email"  value={email} onChangeText={(e)=>setEmail(e)}></TextInput>
+                {emailReq && <Text style={styles.error}>Email is Required</Text>}
+                {emailValid && <Text style={styles.error}>Enter a valid Required</Text>}
                 <Text style={styles.text}>Password</Text>
-                <TextInput style={styles.textInput}  placeholder="Enter the username"></TextInput>
-            </View>
-            <Button 
-            onPress={()=>{handleSubmit()}}
-  title="Submit"
-  color="#841584"
-  style={{width:20,margin:20}}/>
+                <TextInput style={styles.textInput}  placeholder="Enter the password" secureTextEntry={true} value={password} onChangeText={(e)=>setPassword(e)}></TextInput>
+                {passwordError && <Text style={styles.error}>Password is Required</Text>}
+                <Text style={styles.text}>Confirm Password</Text>
+                <TextInput style={styles.textInput}  placeholder="Enter the password" secureTextEntry={true} value={confirmpassword} onChangeText={(e)=>setconfirmPassword(e)}></TextInput>
+                {confirmpasswordError && <Text style={styles.error}>Confirm Password is Required</Text>}
+                {((password !== confirmpassword) || confirmpasswordError)  && <Text style={styles.error}>Password and Confirm Password Should be same</Text>}
+
+            </ScrollView>
   <Pressable
         style={styles.buttonStyle}
-        onPress={() => navigation.navigate('signup')}>
-        <Text style={styles.buttonTextStyle}>Go To Profile Screen</Text>
+        onPress={() => {handleSubmit()}}>
+        <Text style={styles.buttonTextStyle}>Submit</Text>
       </Pressable>
             </View>
         </View>
@@ -38,11 +80,14 @@ const SigninScreen = ({navigation})=>{
 }
 
 const styles = StyleSheet.create({
+  error:{
+    color:'red'
+  },
     buttons:{
         width:20
     },
     formContainer:{
-        textAlign:'center',justifyContent:'center',margin:20
+        textAlign:'center',margin:20
     },
     text:{
         fontSize:20
@@ -55,7 +100,7 @@ const styles = StyleSheet.create({
 
     },
     form:{
-        flex:3,
+        flex:2,
         borderWidth:2,
         borderTopStartRadius:40,
         borderTopRightRadius:40,
@@ -84,12 +129,13 @@ const styles = StyleSheet.create({
     },
     buttonStyle: {
       height: 54,
-      width: '80%',
-      marginTop: 32,
+      width: '60%',
+      marginTop: 2,
+      marginLeft:75,
       borderRadius: 8,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: '#2EE59D',
+      backgroundColor: 'skyblue',
       shadowRadius: 5,
       shadowOpacity: 0.7,
       shadowColor: 'rgba(46, 229, 157, 0.5)',

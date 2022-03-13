@@ -5,33 +5,43 @@ import HomeScreen from './HomeScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const LoginScren = ({navigation})=>{
     const [userData,setUserData] = useState()
+    const [password,setPassword] = useState()
+    const [nameError,setUserError] = useState(false)
+    const [passwordError,setPasswordError] = useState(false)
+
     const handleSubmit = async()=>{
+      userData === ""?setUserError(true):setUserError(false)
+      password === ""?setPasswordError(true):setPasswordError(false)
+
+      if(userData&&password){
+        setUserError(false)
+        setPasswordError(false)
         try {
             await AsyncStorage.setItem('user', userData)
           } catch (e) {
             // saving error
           }
           setUserData('')
-        navigation.navigate('signup')
+          setPassword('')
+        navigation.navigate('home')
+      }
     }
     return(
         <View style={styles.screenContainer}>
             <View style={styles.welcome}>
-            <Text style={{marginTop:140,color:'white',fontSize:50}}>Welcome</Text>
+            <Text style={{paddingHorizontal:30,paddingVertical:65,color:'white',fontSize:50}}>Welcome</Text>
             </View>
             <View style={styles.form}>
             <Text style={{textAlign:'center',fontSize:40}}>Login</Text>
             <View style={styles.formContainer}>
                 <Text style={styles.text}>UserName</Text>
-                <TextInput style={styles.textInput} value={userData} placeholder="Enter the username" onT onChangeText={(e)=>setUserData(e)}></TextInput>
+                <TextInput style={styles.textInput} value={userData} placeholder="Enter the username"  onChangeText={(e)=>setUserData(e)}></TextInput>
+                {nameError && <Text style={styles.error}>Username is Required</Text>}
                 <Text style={styles.text}>Password</Text>
-                <TextInput style={styles.textInput}  placeholder="Enter the username"></TextInput>
+                <TextInput style={styles.textInput}  placeholder="Enter the password" secureTextEntry={true} value={password} onChangeText={(e)=>setPassword(e)}></TextInput>
+                {passwordError && <Text style={styles.error}>Password is Required</Text>}
+                <Text>Don't have Account?<Text style={{fontSize:20,color:'blue'}} onPress={()=>{navigation.navigate('signup')}}>Signin</Text></Text>
             </View>
-            {/* <Button 
-            onPress={()=>{handleSubmit()}}
-  title="Submit"
-  color="#841584"
-  style={{width:20,margin:20}}/> */}
   <Pressable
         style={styles.buttonStyle}
         onPress={() => {handleSubmit()}}>
@@ -44,11 +54,14 @@ const LoginScren = ({navigation})=>{
 }
 
 const styles = StyleSheet.create({
+  error:{
+    color:'red'
+  },
     buttons:{
         width:20
     },
     formContainer:{
-        textAlign:'center',justifyContent:'center',margin:20
+        textAlign:'center',justifyContent:'center',margin:20,
     },
     text:{
         fontSize:20
@@ -62,6 +75,7 @@ const styles = StyleSheet.create({
     },
     form:{
         flex:3,
+        marginTop:60,
         borderWidth:2,
         borderTopStartRadius:40,
         borderTopRightRadius:40,

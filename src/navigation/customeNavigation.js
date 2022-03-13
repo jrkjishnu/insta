@@ -8,16 +8,13 @@ import RootNavigator from './RootNavigator';
 import DetailsScreen from '../screens/DetailsScreen';
 
 const Stack = createNativeStackNavigator();
-const RootStackNavigator = ()=>{
+const customeNavigator = ()=>{
     return (
-        <NavigationContainer>
             <Stack.Navigator screenOptions={{headerShown: false}}>
-                <Stack.Screen name="Login" component={LoginScren}/>
-                <Stack.Screen name="signup" component={SigninScreen}/>
-                <Stack.Screen name="home" component={RootNavigator}/>
+                <Stack.Screen name="Home" component={HomeScreen}/>
+                <Stack.Screen name="detail" component={DetailsScreen}/>
             </Stack.Navigator>
-        </NavigationContainer>
     )
 }
 
-export default RootStackNavigator
+export default customeNavigator
