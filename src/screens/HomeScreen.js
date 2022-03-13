@@ -66,9 +66,9 @@ const HomeScreen = ({navigation}) => {
                )}
                showsHorizontalScrollIndicator={false}
                horizontal 
-               keyExtractor={item=>item.id}
+               keyExtractor={item=>item}
                />
-                           <Text style={styles.title}>Location Directory</Text>
+                <Text style={styles.title}>Location Directory</Text>
 
       <ScrollView>
      

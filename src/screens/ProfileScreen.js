@@ -1,36 +1,27 @@
-import React, { useEffect } from 'react';
-import {View, Text, StyleSheet, Pressable,Linking, ActivityIndicator} from 'react-native';
-import WebView from 'react-native-webview'
+import React, { useEffect, useState } from 'react';
+import {View, Text, StyleSheet, Pressable} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ProfileScreen = ({navigation}) => {
-    
-    const  IndicatorLoadingView =()=> {
-        return (
-          <ActivityIndicator
-            color="#3235fd"
-            size="large"
-            style={styles.IndicatorStyle}
-          />
-        );
+  const [data,setData] = useState()
+  useEffect(()=>{
+    handleSubmit();
+  },[])
+  const handleSubmit = async()=>{
+    try {
+      const value = await AsyncStorage.getItem('user')
+      if(value !== null) {
+        setData(value)
       }
-    //const URL = "https://reactnativeforyou.com"
-    
-    return <WebView source={{ uri: 'https://reactnative.dev/' }} 
-    renderLoading={IndicatorLoadingView}
-
-    />;
-
-//   return (
-//     <View style={styles.screenContainer}>
-//       <Text style={styles.title}>Profile Screen</Text>
-//       <Pressable
-//         style={styles.buttonStyle}
-//         onPress={() => {        Linking.openURL(URL).catch((err) => console.error('An error occurred', err));
-//     }}>
-//         <Text style={styles.buttonTextStyle}>Go To Profile Screen</Text>
-//       </Pressable>
-//     </View>
-//   );
+    } catch(e) {
+      // error reading value
+    }
+  }
+  return (
+    <View style={styles.screenContainer}>
+      <Text style={{fontSize:50}}>{data}</Text>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -63,15 +54,6 @@ const styles = StyleSheet.create({
     color: '#fdfdfd',
     fontWeight: '700',
   },
-  IndicatorStyle: {
-    position: "absolute",
-    alignItems: "center",
-    justifyContent: "center",
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0
-  }
 });
 
 export default ProfileScreen;

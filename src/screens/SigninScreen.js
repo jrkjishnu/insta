@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import {View, Text, StyleSheet, Pressable, TextInput,Button, ScrollView} from 'react-native';
-import RootNavigator from '../navigation/RootNavigator';
-import HomeScreen from './HomeScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { emailValidator } from '../../validator';
 const SigninScreen = ({navigation})=>{
@@ -28,7 +26,7 @@ const SigninScreen = ({navigation})=>{
       let validate = emailValidator(email)
       validate.required?setEmailReq(false): setEmailReq(true)
       validate.valid?setEmailValid(false): setEmailValid(true)
-      if(userData&&password&&age){
+      if(userData&&password&&age && !confirmpasswordError){
         setUserError(false)
         setPasswordError(false)
         try {
@@ -38,7 +36,7 @@ const SigninScreen = ({navigation})=>{
           }
           setUserData('')
           setPassword('')
-        navigation.navigate('home')
+        navigation.navigate('root')
       }
     }
     return(

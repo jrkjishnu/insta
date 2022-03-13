@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import {View, Text, StyleSheet, Pressable, TextInput,Button} from 'react-native';
-import RootNavigator from '../navigation/RootNavigator';
-import HomeScreen from './HomeScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const LoginScren = ({navigation})=>{
     const [userData,setUserData] = useState()
@@ -23,7 +21,7 @@ const LoginScren = ({navigation})=>{
           }
           setUserData('')
           setPassword('')
-        navigation.navigate('home')
+        navigation.navigate('root')
       }
     }
     return(

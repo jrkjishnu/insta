@@ -6,7 +6,6 @@ const DetailsScreen = ({route})=>{
     const [id,setId] = useState(route.params.data.id)
 
     const {userId,image} = route.params.data
-    console.warn("id",route.params.data.image);
     const handleSubmit = ()=>{
         console.warn('press');
         fetch('https://jsonplaceholder.typicode.com/posts', {
