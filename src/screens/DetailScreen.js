@@ -10,7 +10,6 @@ const DetailScreen = ({navigation}) => {
   const handleSubmit = async()=>{
     try {
       const value = await AsyncStorage.getItem('user')
-      console.log("val",value);
       if(value !== null) {
         setData(value)
       }

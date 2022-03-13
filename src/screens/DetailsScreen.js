@@ -1,5 +1,6 @@
 import {Button, Image, Pressable, StyleSheet, Text, TextInput,View} from 'react-native'
 import React, { useState } from 'react'
+
 const DetailsScreen = ({route})=>{
     const [title,setTitle] = useState(route.params.data.title)
     const [id,setId] = useState(route.params.data.id)

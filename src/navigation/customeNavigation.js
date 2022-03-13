@@ -8,7 +8,7 @@ import RootNavigator from './RootNavigator';
 import DetailsScreen from '../screens/DetailsScreen';
 
 const Stack = createNativeStackNavigator();
-const customeNavigator = ()=>{
+const CustomeNavigator = ()=>{
     return (
             <Stack.Navigator screenOptions={{headerShown: false}}>
                 <Stack.Screen name="Home" component={HomeScreen}/>
@@ -17,4 +17,4 @@ const customeNavigator = ()=>{
     )
 }
 
-export default customeNavigator
+export default CustomeNavigator

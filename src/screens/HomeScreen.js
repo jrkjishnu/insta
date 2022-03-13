@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import {View, Text, StyleSheet, Pressable, Image, TouchableHighlight, FlatList, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, Pressable,ActivityIndicator, Image, TouchableHighlight, FlatList, ScrollView} from 'react-native';
 import axios from 'axios'
 import CardComponent from '../components/Card';
 
 const Item = ({ title }) => (
   <View style={styles.item}>
-    <Text style={styles.title} onPress={()=>console.warn('ddd')}>{title}</Text>
+    <Text style={styles.title}>{title}</Text>
   </View>
 );
 const HomeScreen = ({navigation}) => {
@@ -21,7 +21,6 @@ const HomeScreen = ({navigation}) => {
       return item
     })
     setList(newData)
-    console.warn("newData",list)
     // setList(json)
     //console.warn(json);
   //   for (var i=0;i<val.length;i++) {
@@ -57,7 +56,6 @@ const HomeScreen = ({navigation}) => {
   }
   return (
     <View style={styles.screenContainer}>
-            <Text style={styles.title}>Home Screen</Text>
       <FlatList
                data={data}
                renderItem= { ({item}) => (
@@ -66,27 +64,20 @@ const HomeScreen = ({navigation}) => {
                 <Image source={{ uri: item }} style={styles.profileImg} />
                 </TouchableHighlight>
                )}
-               showsHorizontalScrollI ndicator={false}
-               horizontal
+               showsHorizontalScrollIndicator={false}
+               horizontal 
+               keyExtractor={item=>item.id}
                />
-      
-      <Pressable
-        style={styles.buttonStyle}
-        onPress={() => handleList()}>
-        <Text style={styles.buttonTextStyle}>Go To Detail Screen</Text>
-      </Pressable>
-      {/* <FlatList
-        data={list}
-        renderItem={ ({ item }) => (
-          <Text style={{fontSize:40}} onPress={()=>navigation.navigate('detail',{abc:'123',item})}>{item.title}</Text>
-        )}
-        keyExtractor={item => item.id}
-      /> */}
+                           <Text style={styles.title}>Location Directory</Text>
+
       <ScrollView>
-        
-      {list && (list.map((item)=>{
-          return <CardComponent data={item} navigation={navigation}/>
+     
+      {list && (list.map((item,index)=>{
+          return <CardComponent data={item} navigation={navigation} key={index}/>
       }))}
+       {!list && <View style={{marginTop:60}}>
+    <ActivityIndicator size="large" />
+  </View>}
       </ScrollView>
     </View>
   );
@@ -96,47 +87,29 @@ const styles = StyleSheet.create({
   profileImgContainer: {
     marginTop:40,
     marginLeft: 8,
-    height: 250,
-    width: 250,
+    height: 100,
+    width: 100,
     borderRadius: 40,
     overflow: 'hidden',
+    marginBottom:70
   },
   profileImg: {
     flex: 1,
     flexDirection: 'row',
-    height: 250,
-    width: 250,
-    borderRadius: 40,
+    height: 100,
+    width: 100,
+    borderRadius: 80,
   },
   screenContainer: {
     //flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
   },
   title: {
     fontSize: 32,
-  },
-  buttonStyle: {
-    height: 54,
-    width: '80%',
-    marginTop: 32,
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#2EE59D',
-    shadowRadius: 5,
-    shadowOpacity: 0.7,
-    shadowColor: 'rgba(46, 229, 157, 0.5)',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-  },
-  buttonTextStyle: {
-    color: '#fdfdfd',
-    fontWeight: '700',
-  },
+    marginBottom:15,
+    color:'blue'
+  }
 });
 
 export default HomeScreen;

@@ -20,7 +20,8 @@ const CardComponent = ({data,navigation})=>{
 
     // </View>
     //         </TouchableOpacity>
-    <View style={styles.card} onPress={()=>console.warn('hh')}>
+    <View style={styles.card}>
+        <TouchableOpacity onPress={()=>navigation.navigate('detail',{abc:'123',data})}>
         <View style={styles.img}>
         <ImageBackground style={styles.img}   imageStyle={{ borderRadius: 40}}
  source={{uri:data.image}}>
@@ -31,6 +32,7 @@ const CardComponent = ({data,navigation})=>{
         </View>
         </ImageBackground>
         </View>
+        </TouchableOpacity>
     </View>
 
     )
@@ -50,7 +52,7 @@ const styles = StyleSheet.create({
         width:480,
         height:300,
         borderRadius:40,
-        marginBottom:10
+        marginBottom:15
     },
     img:{
         //// width:190,
