@@ -26,7 +26,7 @@ const SigninScreen = ({navigation})=>{
       let validate = emailValidator(email)
       validate.required?setEmailReq(false): setEmailReq(true)
       validate.valid?setEmailValid(false): setEmailValid(true)
-      if(userData&&password&&age && !confirmpasswordError){
+      if(userData&&password&&age && (password === confirmpassword)){
         setUserError(false)
         setPasswordError(false)
         try {
@@ -61,7 +61,7 @@ const SigninScreen = ({navigation})=>{
                 <TextInput style={styles.textInput}  placeholder="Enter the password" secureTextEntry={true} value={password} onChangeText={(e)=>setPassword(e)}></TextInput>
                 {passwordError && <Text style={styles.error}>Password is Required</Text>}
                 <Text style={styles.text}>Confirm Password</Text>
-                <TextInput style={styles.textInput}  placeholder="Enter the password" secureTextEntry={true} value={confirmpassword} onChangeText={(e)=>setconfirmPassword(e)}></TextInput>
+                <TextInput style={styles.textInput}  placeholder="Enter the confirm password" secureTextEntry={true} value={confirmpassword} onChangeText={(e)=>setconfirmPassword(e)}></TextInput>
                 {confirmpasswordError && <Text style={styles.error}>Confirm Password is Required</Text>}
                 {((password !== confirmpassword) || confirmpasswordError)  && <Text style={styles.error}>Password and Confirm Password Should be same</Text>}
 
@@ -128,7 +128,6 @@ const styles = StyleSheet.create({
     buttonStyle: {
       height: 54,
       width: '60%',
-      marginTop: 2,
       marginLeft:75,
       borderRadius: 8,
       alignItems: 'center',

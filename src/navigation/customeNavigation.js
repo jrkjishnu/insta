@@ -6,9 +6,9 @@ import DetailsScreen from '../screens/DetailsScreen';
 const Stack = createNativeStackNavigator();
 const CustomeNavigator = ()=>{
     return (
-            <Stack.Navigator screenOptions={{headerShown: false}}>
+            <Stack.Navigator screenOptions={{headerShown: true}}>
                 <Stack.Screen name="Home" component={HomeScreen}/>
-                <Stack.Screen name="detail" component={DetailsScreen}/>
+                <Stack.Screen name="detail" screenOptions={{headerShown:false}} options={{headerTitle:"Details"}} component={DetailsScreen}/>
             </Stack.Navigator>
     )
 }

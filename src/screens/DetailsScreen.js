@@ -4,10 +4,10 @@ import React, { useState } from 'react'
 const DetailsScreen = ({route})=>{
     const [title,setTitle] = useState(route.params.data.title)
     const [id,setId] = useState(route.params.data.id)
-
+    const [show,setShow] = useState(false)
+    
     const {userId,image} = route.params.data
     const handleSubmit = ()=>{
-        console.warn('press');
         fetch('https://jsonplaceholder.typicode.com/posts', {
   method: 'POST',
   body: JSON.stringify({
@@ -20,13 +20,13 @@ const DetailsScreen = ({route})=>{
   },
 })
   .then((response) => response.json())
-  .then((json) => console.warn(json));
+  .then((json) =>{json.id?setShow(true):setShow(false)});
     }
     return (
         <View style={styles.container}>
-            <Text style={{fontSize:20,textAlign:'center'}}>Update Details</Text>
-            <Image source={{uri:image}} style={{width:390,height:'40%',borderRadius:10,marginLeft:8}}/>
-            <TextInput style={styles.text} placeholder="userId" value={userId.toString(2)} ></TextInput>
+            {show&&<Text style={{fontSize:20,textAlign:'center',color:'green'}}>Updated Details Successfully</Text>}
+            <Image source={{uri:image}} style={{width:390,height:'40%',borderRadius:10,marginLeft:8,marginTop:10}}/>
+            <TextInput style={styles.text} editable={false} placeholder="userId" value={userId.toString(2)} ></TextInput>
             <TextInput style={styles.text} placeholder="Id" value={id.toString(2)} onChangeText={(e)=>setId(e)} keyboardType='numeric'></TextInput>
             <TextInput style={styles.text} placeholder="title" multiline = {true} onChangeText={(e)=>setTitle(e)}
 numberOfLines = {Math.ceil(route.params.data.title.length/45)} value={title.toString(2)}  keyboardType='numeric'></TextInput>
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     container:{
         borderWidth:2,
         marginTop:90,
-        height:550,
+        height:600,
         margin:40,
         borderRadius:20
 

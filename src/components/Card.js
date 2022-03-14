@@ -21,13 +21,13 @@ const CardComponent = ({data,navigation})=>{
     // </View>
     //         </TouchableOpacity>
     <View style={styles.card}>
-        <TouchableOpacity onPress={()=>navigation.navigate('detail',{abc:'123',data})}>
+        <TouchableOpacity onPress={()=>navigation.navigate('detail',{data})}>
         <View style={styles.img}>
         <ImageBackground style={styles.img}   imageStyle={{ borderRadius: 40}}
  source={{uri:data.image}}>
         <View >
         <MaterialCommunityIcons style={{marginLeft:420}} name="heart" color={color} size={40} onPress={()=>setColor(color === 'red'?'white':'red')}/>
-        <Text style={styles.text} style={{marginTop:170,marginLeft:40,fontSize:40,color:'white'}} onPress={()=>navigation.navigate('detail',{abc:'123',data})}>Beauty</Text>
+        <Text style={styles.text} style={{marginTop:170,marginLeft:40,fontSize:40,color:'white'}}>Beauty</Text>
         <Text style={styles.text} style={{marginLeft:40,color:'white'}}>{data.title}</Text>
         </View>
         </ImageBackground>
