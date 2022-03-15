@@ -14,7 +14,7 @@ const [data,setData] = useState([])
     const lauchCamera = ()=>{
         ImagePicker.openCamera({
             width: 300,
-            height: 400,
+            height: 300,
             cropping: true,
           }).then(image => {
             if(image && image.size > 3000000)
@@ -40,11 +40,11 @@ const [data,setData] = useState([])
         try{
             ImagePicker.openPicker({
                 width: 300,
-                height: 400,
+                height: 300,
                 cropping: true
               }).then(images => {
-                   console.log("fi",images)
-                   console.log(images.cropRect.width > 500);
+                //    console.log("fi",images)
+                //    console.log(images.cropRect.width > 500);
                    if(images && images.size > 1000000)
                    {
                     setSizeError(true)
@@ -53,8 +53,8 @@ const [data,setData] = useState([])
                        setSizeError(false)
                    }
                 //images.size > 75000 ? setSizeError(true):setSizeError(false)
-                (images.cropRect.width > 500 || images.cropRect.width >500) ? setWidthError(true):setWidthError(false)
-                if(!(images.cropRect.width > 500 || images.cropRect.width >500) && !(images.size > 100000))
+                (images.width > 500 || images.width >500) ? setWidthError(true):setWidthError(false)
+                if(!(images.width > 500 || images.width >500) && !(images.size > 100000))
             {
                 setData([...data,images.path])
             }
