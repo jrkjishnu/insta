@@ -5,9 +5,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const ProfileScreen = ({navigation}) => {
   const [data,setData] = useState()
   useEffect(()=>{
-    handleSubmit();
+    getData();
   },[])
-  const handleSubmit = async()=>{
+  const getData = async()=>{
     try {
       const value = await AsyncStorage.getItem('user')
       if(value !== null) {

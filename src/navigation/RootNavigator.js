@@ -4,6 +4,9 @@ import ProfileScreen from '../screens/ProfileScreen';
 import PolicyScreen from '../screens/PolicyScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import customeNavigator from './customeNavigation';
+import Gallery from '../screens/GalleryScreen';
+import ImagePickup from '../screens/ImagePickup';
+import Initi from '../screens/Initi';
 
 const Tab = createBottomTabNavigator();
 const RootNavigator = () => {
@@ -27,6 +30,12 @@ const RootNavigator = () => {
           tabBarLabel: 'Policy',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="hvac" color={color} size={size} />
+          ),
+        }}/>
+        <Tab.Screen name="gallery" component={ImagePickup} options={{
+          tabBarLabel: 'Gallery',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="image" color={color} size={size} />
           ),
         }}/>
       </Tab.Navigator>

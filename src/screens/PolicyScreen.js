@@ -1,37 +1,11 @@
 import React, { useEffect } from 'react';
 import {View, Text, StyleSheet, Pressable,Linking, ActivityIndicator} from 'react-native';
 import WebView from 'react-native-webview'
+import Webviews from '../components/Webview';
 
 const PolicyScreen = ({navigation}) => {
-    
-    const  IndicatorLoadingView =()=> {
-        return (
-          <ActivityIndicator
-            color="#3235fd"
-            size="large"
-            style={styles.IndicatorStyle}
-          />
-        );
-      }
-    //const URL = "https://reactnativeforyou.com"
-    
-    return <WebView source={{ uri: 'https://reactnative.dev/' }} 
-    renderLoading={IndicatorLoadingView}
-
-    />;
-
-//   return (
-//     <View style={styles.screenContainer}>
-//       <Text style={styles.title}>Profile Screen</Text>
-//       <Pressable
-//         style={styles.buttonStyle}
-//         onPress={() => {        Linking.openURL(URL).catch((err) => console.error('An error occurred', err));
-//     }}>
-//         <Text style={styles.buttonTextStyle}>Go To Profile Screen</Text>
-//       </Pressable>
-//     </View>
-//   );
-};
+      return <Webviews />
+}
 
 const styles = StyleSheet.create({
   screenContainer: {
