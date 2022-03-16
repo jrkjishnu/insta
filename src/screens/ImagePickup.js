@@ -8,7 +8,7 @@ const ImagePickup = ()=>{
 const topRef = useRef()
 const thumbRef = useRef()
 const [Activeindex,setActiveIndex] = useState(0)
-const [data,setData] = useState([])
+const [data,setData] = useState(["https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg","https://thumbs.dreamstime.com/z/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg"])
     const [sizeError,setSizeError] = useState(false)
     const [widthError,setWidthError] = useState(false)
     const lauchCamera = ()=>{
@@ -43,7 +43,7 @@ const [data,setData] = useState([])
                 height: 300,
                 cropping: true
               }).then(images => {
-                //    console.log("fi",images)
+                    console.log("fi",images)
                 //    console.log(images.cropRect.width > 500);
                    if(images && images.size > 1000000)
                    {

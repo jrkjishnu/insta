@@ -94,8 +94,8 @@ const styles = StyleSheet.create({
         fontSize:20,
         borderWidth:1,
         borderRadius:15,
-        marginBottom:10
-
+        marginBottom:10,
+        height:50
     },
     form:{
         flex:2,
