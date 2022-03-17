@@ -4,10 +4,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import SocialButton from '../components/SocialButton';
+import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
 
 const LoginScren = ({navigation})=>{
   useEffect(()=>{
     GoogleSignin.configure({
+      scopes: ['email'],
       webClientId: '37085046743-jp47ff6787lmol1605to1g1g3tc6t2mk.apps.googleusercontent.com',
     });
   },[])
@@ -48,30 +50,30 @@ const LoginScren = ({navigation})=>{
         navigation.navigate('root')
       }
     }
-  //   const onFacebookButtonPress = async()=>{
-  //     try{
-  //       const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+    const onFacebookButtonPress = async()=>{
+      try{
+        const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
 
-  // if (result.isCancelled) {
-  //   throw 'User cancelled the login process';
-  // }
+  if (result.isCancelled) {
+    throw 'User cancelled the login process';
+  }
 
-  // // Once signed in, get the users AccesToken
-  // const data = await AccessToken.getCurrentAccessToken();
+  // Once signed in, get the users AccesToken
+  const data = await AccessToken.getCurrentAccessToken();
 
-  // if (!data) {
-  //   throw 'Something went wrong obtaining access token';
-  // }
+  if (!data) {
+    throw 'Something went wrong obtaining access token';
+  }
 
-  // // Create a Firebase credential with the AccessToken
-  // const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
+  // Create a Firebase credential with the AccessToken
+  const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
 
-  // // Sign-in the user with the credential
-  // return await auth().signInWithCredential(facebookCredential);
-  //     }catch(error){
-  //       console.log(error);
-  //     }
-  //   }
+  // Sign-in the user with the credential
+  return await auth().signInWithCredential(facebookCredential);
+      }catch(error){
+        console.log(error);
+      }
+    }
     return(
         <View style={styles.screenContainer}>
             <View style={styles.welcome}>
@@ -94,13 +96,13 @@ const LoginScren = ({navigation})=>{
         <Text style={styles.buttonTextStyle}>Submit</Text>
       </Pressable>
       <Text style={{marginLeft:'50%',marginTop:5}}>OR</Text>
-      {/* <SocialButton
+      <SocialButton
         buttonTitle="Sign Up with Facebook"
         btnType="facebook"
         color="#4867aa"
         backgroundColor="#e6eaf4"
         onPress={() => {onFacebookButtonPress().then(() => console.log('Signed in with Facebook!'))}}
-      /> */}
+      />
       <SocialButton 
         buttonTitle="Sign Up with Google"
         btnType="google"
