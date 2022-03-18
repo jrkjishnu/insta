@@ -10,6 +10,7 @@ import Initi from '../screens/Initi';
 
 const Tab = createBottomTabNavigator();
 const RootNavigator = () => {
+  console.log("root")
   return (
         
       <Tab.Navigator screenOptions={{headerShown: false}}

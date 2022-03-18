@@ -1,8 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import {View, Text, StyleSheet, Pressable, Button} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
 const ProfileScreen = ({navigation}) => {
+   const signOuts = async () => {
+    try {
+      await AsyncStorage.removeItem('user');
+  }
+  catch(exception) {
+      console.log(exception);
+  }
+      console.log("navigation")
+      try {
+        // await GoogleSignin.revokeAccess();
+        // await GoogleSignin.signOut();
+        auth().signOut()
+          .then((res) => navigation.navigate('Login'))
+      } catch (error) {
+        console.error(error);
+      }
+    };
   const [data,setData] = useState()
   useEffect(()=>{
     getData();
@@ -10,6 +28,7 @@ const ProfileScreen = ({navigation}) => {
   const getData = async()=>{
     try {
       const value = await AsyncStorage.getItem('user')
+      console.log("val",value);
       if(value !== null) {
         setData(value)
       }
@@ -20,6 +39,7 @@ const ProfileScreen = ({navigation}) => {
   return (
     <View style={styles.screenContainer}>
       <Text style={{fontSize:50}}>{data}</Text>
+      <Button title="logout" onPress={()=>signOuts()}>SignOut</Button>
     </View>
   );
 };

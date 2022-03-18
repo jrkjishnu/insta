@@ -23,6 +23,12 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb657073398859178</string>
+			</array>
+		</dict>
+		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
@@ -33,6 +39,12 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>FacebookAppID</key>
+	<string>657073398859178</string>
+	<key>FacebookClientToken</key>
+	<string>fc27336a32f3655a7fd9738a5bf925af</string>
+	<key>FacebookDisplayName</key>
+	<string>MyawesomeApp</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
@@ -53,6 +65,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>fonts/MaterialCommunityIcons.ttf</string>
+		<string>fonts/FontAwesome.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

@@ -17,8 +17,8 @@ const LoginScren = ({navigation})=>{
     const [password,setPassword] = useState()
     const [nameError,setUserError] = useState(false)
     const [passwordError,setPasswordError] = useState(false)
+    const [socialUserData,setSocialUserData] = useState()
     const onGoogleButtonPress = async()=>{
-      console.warn("sdf");
       try{
         // Get the users ID token
   const { idToken } = await GoogleSignin.signIn();
@@ -27,7 +27,9 @@ const LoginScren = ({navigation})=>{
   const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
   // Sign-in the user with the credential
-  return await auth().signInWithCredential(googleCredential);
+  const user =  await auth().signInWithCredential(googleCredential);
+  console.log("user",user.additionalUserInfo.profile.email);
+  return user.additionalUserInfo.profile.email;
       }
     catch(error){
       console.log("err",error);
@@ -43,7 +45,7 @@ const LoginScren = ({navigation})=>{
         try {
             await AsyncStorage.setItem('user', userData)
           } catch (e) {
-            // saving error
+            console.log(e)
           }
           setUserData('')
           setPassword('')
@@ -69,7 +71,8 @@ const LoginScren = ({navigation})=>{
   const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
 
   // Sign-in the user with the credential
-  return await auth().signInWithCredential(facebookCredential);
+  const user = await auth().signInWithCredential(facebookCredential);
+  return user;
       }catch(error){
         console.log(error);
       }
@@ -101,14 +104,29 @@ const LoginScren = ({navigation})=>{
         btnType="facebook"
         color="#4867aa"
         backgroundColor="#e6eaf4"
-        onPress={() => {onFacebookButtonPress().then(() => console.log('Signed in with Facebook!'))}}
+        onPress={() => {onFacebookButtonPress().then((user) =>{
+            if(user){
+              navigation.navigate('root')
+            }
+        } )}}
       />
       <SocialButton 
         buttonTitle="Sign Up with Google"
         btnType="google"
         color="#de4d41"
         backgroundColor="#f5e7ea"
-        onPress={() => {onGoogleButtonPress().then(() => navigation.navigate('root'))}}
+        onPress={() => {onGoogleButtonPress().then(async(user) =>{
+          if(user){
+            console.log("usss",user);
+            setUserData(user)
+            try {
+              await AsyncStorage.setItem('user', userData)
+            } catch (e) {
+              console.log(e)
+            }
+            navigation.navigate('root')
+          }
+        })}}
       />
             </View>
         </View>
